@@ -1,0 +1,24 @@
+<aura:component controller="SyncToHansaProd_Controller" implements="force:lightningQuickAction,force:hasRecordId" access="global">
+    <aura:attribute name="message" type="String" /> 
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="showSave" type="boolean" default="false"/>
+    <aura:attribute name="currentUser" type="User"/>
+
+
+    <force:recordData aura:id="recordLoader" recordId="{!$SObjectType.CurrentUser.Id}"  fields="Profile.Name" targetFields="{!v.currentUser}" recordUpdated="{!c.recordUpdate}"/>
+    
+    <lightning:card>
+        <div style="font-size: 15px" class="slds-text-heading_medium slds-hyphenate">
+            <center><ui:outputRichText value="{!v.message}" /></center>                    
+        </div><br/>
+        <aura:if isTrue="{!v.showSave}">
+            <center><lightning:button variant="brand" label="Start Sync" title="Brand action" onclick="{! c.startSync }" /></center>
+        </aura:if>
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="exampleHolder">
+                <lightning:spinner alternativeText="Loading" size="medium" />
+            </div>
+        </aura:if>
+    </lightning:card>
+
+</aura:component>
